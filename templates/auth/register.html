@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} Регистрация {% endblock %}
+{% block bannerh1 %} Регистрация  {% endblock %}
+{% block bannerh2 %}   {% endblock %}
+{% block pagename %}Форма регистрации {% endblock %}
+
+{% block content %}
+
+
+
+ {% if user.login|length == 0 %}
+ <form class="c-form" method='post' action="{{ url({alias:'alias_register'}) }}">
+     <h2>Регистрация</h2>
+     <input type="text" placeholder="Логин" pattern='[0-9A-Za-z]{5,32}' name=login id="login" required>
+     <input type="email" placeholder="E-Mail" name=email id="email" required>
+     <input type="password"  placeholder="Пароль" pattern='[0-9A-Za-z]{5,32}' name=pass id="password" required>
+     
+     <input type="submit" name=reg value="Зарегистрироваться" class="button green">
+ </form>
+ <p>Зарегистрированы? <a href="{{ url({alias:'alias_login'}) }}">Войти!</a> </p> 
+
+{% else %}
+<p>Авторизация не требуется, вы авторизованны</p> 
+ {% endif %}
+ 
+
+{% endblock %}

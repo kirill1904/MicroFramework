@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} Авторизация {% endblock %}
+{% block bannerh1 %} Вход  {% endblock %}
+{% block bannerh2 %}   {% endblock %}
+{% block pagename %}Авторизация {% endblock %}
+{% block lact %}class=activePage{% endblock %}
+{% block content %}
+
+
+
+{% if user.login|length == 0 %}
+ <form class="c-form" method='post' action="{{ url({alias:'alias_login'}) }}">
+     <h2>Авторизация</h2>
+     <input type="text" pattern='[0-9A-Za-z]{5,32}' placeholder="Логин" name=login id="login" required>
+     <input type="password" pattern='[0-9A-Za-z]{6,32}'  placeholder="Пароль" name=pass id="password" required>
+     <input type="submit" name=log value="Войти" class="button green">
+ </form>
+ <p>Еще не зарегистрированы? <a href="{{ url({alias:'alias_register'}) }}">Зарегистрироваться!</a>   </p> 
+{% else %}
+<p>Авторизация не требуется, вы авторизованны</p> 
+{% endif %}
+ 
+
+{% endblock %}

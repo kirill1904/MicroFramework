@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %} {{title| raw }}} {% endblock %}
+{% block bannerh1 %} {{title}} {% endblock %}
+{% block bannerh2 %} Всего новостей: {{apps.blog.count}} {% endblock %}
+{% block bact %}class=activePage{% endblock %}
+
+
+
+{% block pagename %}
+Новости 
+{% endblock %}
+{% block content %}
+Новости <hr>
+
+<br>
+
+
+<div class="row">
+{% for art in news %}
+<div class="col-sm-4">
+<div class="card" style="width: 15rem;">
+	<img class="card-img-top" src="/load/images/{{art.image}}" alt="Card image cap">
+	<div class="card-body">
+	    <h5 class="card-title">{{art.title}}</h5>
+	    <p class="card-text">{{ art.text|truncate(50, true) }}</p>
+	    <a href="{{url({app:'news',alias:'blog_page',id:art.id,title:art.name})}}" class="btn btn-primary">Читать</a>
+	</div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+
+
+
+   
+
+{{today}}
+{% endblock %}

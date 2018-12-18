@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %} {{title}} {% endblock %}
+{% block cact %}class=activePage{% endblock %}
+{% block bannerh1 %} {{title}} {% endblock %}
+{% block bannerh2 %} {{banner}} {% endblock %}
+{% block pagename %}Контакты {% endblock %}
+{% block content %}
+<br><br><hr>
+Контакты <br>
+{{phone}}<br>
+{{email}}<hr>
+{% endblock %}
