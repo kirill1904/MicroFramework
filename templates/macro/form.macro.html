@@ -1,0 +1,16 @@
+{% macro start(action, class, type) %}
+    <form class="{{ class|default('') }}" method="{{ method|default('POST') }}" action="{{ action }}"> 
+{% endmacro %}
+
+{% macro input(name, value, class, type, size) %}
+    <input class="{{ class|default('') }}" type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
+{% endmacro %}
+
+{% macro button(name, class, type) %}
+    <form class="{{ class }}" type="{{ name|default('submit') }}" name="{{ name }}"> >
+{% endmacro %}
+
+{% macro end() %}
+    </form> 
+{% endmacro %}
+

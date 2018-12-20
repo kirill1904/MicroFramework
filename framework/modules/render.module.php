@@ -3,7 +3,7 @@
 function render($view,$vars = array()){
 	$loader = new Twig_Loader_Filesystem(TEMPLATES_DIR);
 	$loader->addPath(TEMPLATES_DIR . '/apps/' . ACTIVE_APP);
-
+	$loader->addPath(TEMPLATES_DIR . '/macro/');
 	$twig = new Twig_Environment($loader, array(
     //'cache' => TWIG_CHACHE_DIR
 	));
