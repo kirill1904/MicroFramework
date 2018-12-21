@@ -1,8 +1,6 @@
 <?php
 class Auth_Controller extends Controller
 {
-	
-
 	public function main($args){
 		if(isset($args['2'])){
 			$user = db_find('users', 'login', array($args['2']) , 1);

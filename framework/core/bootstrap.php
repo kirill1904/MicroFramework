@@ -43,13 +43,13 @@ class Engine
 
 	public function process_defines(){
 		define('ACTIVE_APP', $this->app['0']);
-		
 	}
 
 	public function process_controllers(){
 		
 		if($this->app || is_array($this->app)){
 			$app_controller = BASE_DIR . '/apps/' . $this->app['0'] . '/controller.php';
+			
 			if ( is_array($this->app['1']['method'])) {
 				//direct render
 				if(file_exists($app_controller)) {

@@ -16,8 +16,9 @@
 {% block content %}
 <h2>{{article.title}}</h2><hr>
 
-<img class="article-image" src="/load/images/{{article.image}}" alt="{{article.title}}"><br>
+<img class="article-image" style="max-width: 700px;max-height: 600px;" src="/load/images/{{article.image}}" alt="{{article.title}}"><br>
 {{article.text|nl2br}}
+
 
 
 {% endblock %}

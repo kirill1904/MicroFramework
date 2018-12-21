@@ -1,0 +1,21 @@
+{% macro start() %}
+<nav>
+	<ul class="pagination pagination-lg justify-content-center">
+{% endmacro %}
+
+{% macro page_item(href,name,state) %}
+	<li class="page-item {{state|default('')}}"><a class="page-link" href="?page={{ href|e }}">{{ name }}</a></li>
+{% endmacro %}
+
+{% macro page_prev(href,state,name) %}
+	<li class="page-item {{state|default('')}}"><a class="page-link" href="?page={{ href| e}}">{{ name|default('Назад') }}</a></li>
+{% endmacro %}
+{% macro page_next(href,state,name) %}
+	<li class="page-item {{state|default('')}}"><a class="page-link" href="?page={{ href|e }}">{{ name|default('Вперед') }}</a></li>
+{% endmacro %}
+
+{% macro end() %}
+  </ul>
+</nav>
+{% endmacro %}
+

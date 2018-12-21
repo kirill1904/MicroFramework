@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title> {{title}}</title>
+	{% for style in settings.styles %}
+	<link rel=stylesheet href='{{style}}'>
+	{% endfor %}
+</head>
+<body>
+	<div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">У вас нет прав доступа!</h1>
+          <p>Для доступа в данный раздел необходимо иметь права администратора!</p>
+          <p>Вернитесь назад или перейдите на главную страницу!</p>
+          <p><button class="btn btn-primary btn-lg" style="display: inline-block;" onclick="window.history.back();" role="button" value="&laquo; Вернуться назад">&laquo; Вернуться назад</button>
+          <a style="display: inline-block;" class="btn btn-primary btn-lg" href="{{url({app:'simple_pages',alias:'alias_index'})}}" role="button">Перейти на главную &raquo;</a></p>
+        </div>
+      </div>
+
+</body>
+</html>
+
+      
+
+
+
+

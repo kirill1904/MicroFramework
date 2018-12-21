@@ -3,8 +3,6 @@
 
 class Simple_Pages_Controller extends Controller
 {
-	
-
 	public function main($args){
 		
 		render('main', array(
@@ -15,9 +13,13 @@ class Simple_Pages_Controller extends Controller
 		));
 	}
 
-	public function viewpage($args){
+	public function contact($args){
+		render('contact',array(
+			'phone' => '+70000000000',
+			'email' => 'adm@site.ru',
+			'title' => 'Контакты'
+		));
 		
-		dump($args);
 		}
 }
 

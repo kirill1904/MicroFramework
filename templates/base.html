@@ -1,4 +1,4 @@
-
+{% import 'form.macro.html' as form %}
 
 <!doctype html>
 <html class="no-js" lang="en">
@@ -9,6 +9,7 @@
   <meta name="MobileOptimized" content="320" />
   <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport" />
   <meta name="description" content="">
+  <link rel="icon" href="/framework/assets/images/icon.ico">
   <link rel="stylesheet" href="/assets/css/style.css">
   <link  href="http://fonts.googleapis.com/css?family=Oswald:regular" rel="stylesheet" type="text/css" >
   <link href='http://fonts.googleapis.com/css?family=Junge' rel='stylesheet' type='text/css'>
@@ -19,7 +20,7 @@
 <link rel=stylesheet href='{{style}}'>
 {% endfor %}
 
-<script src="/assets/js/libs/modernizr-2.5.2.min.js"></script>
+
 </head>
 <!--[if lt IE 7]> <body class="ie6 oldies"> <![endif]-->
 <!--[if IE 7]>    <body class="ie7 oldies"> <![endif]-->
@@ -45,7 +46,7 @@
             <li>
               <a href="{{url({app:'simple_pages',alias:'alias_contact'})}}" {% block cact %}{% endblock %}><span class="icon">M</span>Контакты</a>
             </li>
-            {% if user.login|length == 0 %}
+            {% if user.login == '' %}
              <li>
               <a href="{{url({app:'auth',alias:'alias_login'})}}" {% block lact %}{% endblock %}><span class="icon">t</span>Вход</a>
             </li>
@@ -58,7 +59,7 @@
 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 <a class="dropdown-item" href="{{url({app:'auth',alias:'alias_account'})}}"><span class="icon">L</span>Просмотр профиля</a>
 <a class="dropdown-item" href="{{url({app:'auth',alias:'alias_edit'})}}"><span class="icon">></span>Редактировать профиль</a>
-{% if user.type == 0 %}  
+{% if user.type == 1 %}  
 <a class="dropdown-item" href="{{url({app:'admin',alias:'admin_panel'})}}"><span class="icon">Å</span>В админку</a>
 {% endif %}
 <a class="dropdown-item" href="{{url({app:'auth',alias:'alias_logout'})}}"><span class="icon">Ï</span>Выход</a>
@@ -98,27 +99,40 @@
         </aside>
         <article class="post content" >
 
-{% if message.text|length == 0 %}
-{% else %}
-
-<div class="alert {{message.type}}" role="alert" >
+{% if message.text != '' %}
+<div class="container alert-dismissible fade show fixed-top alert {{message.type}}" role="alert" >
 {{message.text}}
-{% if message.link| length == 0 %} {% else %} - 
-<a class="alert-link" href="{{ url({ alias:message.alias }) }}">{{message.link}}</a>{% endif %}
 
+{% if message.link != '' %} - 
+<a class="alert-link" href="{{ url({ alias:message.alias }) }}">{{message.link}}</a>{% endif %}
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 {% endif %}
-
-            {% block content %}
+            {% block content %}<p>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet impedit, natus, pariatur quisquam tempora qui aut quae consectetur minus unde, dolorum molestias provident nihil voluptates eveniet. Repellat, ab, a.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet impedit, natus, pariatur quisquam tempora qui aut quae consectetur minus unde, dolorum molestias provident nihil voluptates eveniet. Repellat, ab, a.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet impedit, natus, pariatur quisquam tempora qui aut quae consectetur minus unde, dolorum molestias provident nihil voluptates eveniet. Repellat, ab, a.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet impedit, natus, pariatur quisquam tempora qui aut quae consectetur minus unde, dolorum molestias provident nihil voluptates eveniet. Repellat, ab, a.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet impedit, natus, pariatur quisquam tempora qui aut quae consectetur minus unde, dolorum molestias provident nihil voluptates eveniet. Repellat, ab, a.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet impedit, natus, pariatur quisquam tempora qui aut quae consectetur minus unde, dolorum molestias provident nihil voluptates eveniet. Repellat, ab, a.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet impedit, natus, pariatur quisquam tempora qui aut quae consectetur minus unde, dolorum molestias provident nihil voluptates eveniet. Repellat, ab, a.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet impedit, natus, pariatur quisquam tempora qui aut quae consectetur minus unde, dolorum molestias provident nihil voluptates eveniet. Repellat, ab, a.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet impedit, natus, pariatur quisquam tempora qui aut quae consectetur minus unde, dolorum molestias provident nihil voluptates eveniet. Repellat, ab, a.
+</p>
             {% endblock %}
-            <br>
 
+                      
         </article>
+
    </section>
   {% include 'components/footer.html' %}
   
   <script>window.jQuery || document.write('<script src="/framework/assets/js/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="/assets/js/libs/modernizr-2.5.2.min.js"></script>
   <script src="assets/js/script.js"></script>
+
 {% for script in settings.scripts %}
 <script src="{{script}}"></script>
 {% endfor %}

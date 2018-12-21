@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} {{title| raw }}} {% endblock %}
+{% block title %} {{title| raw }} {% endblock %}
 {% block bannerh1 %} {{title}} {% endblock %}
 {% block bannerh2 %} Всего новостей: {{apps.blog.count}} {% endblock %}
 {% block bact %}class=activePage{% endblock %}
@@ -10,11 +10,6 @@
 Новости 
 {% endblock %}
 {% block content %}
-Новости <hr>
-
-<br>
-
-
 <div class="row">
 {% for art in news %}
 <div class="col-sm-4">
@@ -28,7 +23,10 @@
 </div>
 </div>
 {% endfor %}
+{% include 'paginator.html' %}
 </div>
+
+
 
 
 

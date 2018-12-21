@@ -4,7 +4,14 @@
 class Blog_Controller extends Controller
 {
 	public function Main($args){
-		$news_list = db_find('blog');
+		//lorem(30);
+		$per_page = PER_PAGE; 
+		$offset = page_offset($per_page);
+		$collection = db_collection('blog',$offset,$per_page);
+		while( $art = $collection->next() ) {
+			$news_list[]=$art;
+		}
+		if(isset($news_list)){
 		foreach ($news_list as $art) {
 			$art['name'] = str2url($art['title']);
 		}
@@ -12,6 +19,7 @@ class Blog_Controller extends Controller
 			'title' =>  'Новости',
 			'news' => $news_list
 		));
+	}
 	}
 
 	public function read($args){

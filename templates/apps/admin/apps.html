@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+
+ {% block adminpanel %}
+ <h1 class="h2">Управление приложениями</h1><hr>
+
+<div class="list-group" >
+<div class="row" >
+<div class="col-3">
+<div class="list-group" id="list-tab" role="tablist">
+	{% for app in apps %}
+	{% if app.system==1 %}
+  	<a class="list-group-item list-group-item-action" id="list-{{app['appname']}}-list" data-toggle="list" href="#list-{{app['appname']}}" role="tab" aria-controls="{{app['appname']}}">{{app['name']}} <span class="badge badge-pill badge-warning">sys</span></a>
+  	{% else %}
+  	<a class="list-group-item list-group-item-action" id="list-{{app['appname']}}-list" data-toggle="list" href="#list-{{app['appname']}}" role="tab" aria-controls="{{app['appname']}}">{{app['name']}}</a>
+  	{% endif %}
+	{% endfor %}
+</div>
+  </div>
+  <div class="col-8" >
+   <div class="tab-content" id="nav-tabContent">
+      {% for app in apps %}
+
+	<div class="tab-pane fade show" id="list-{{app['appname']}}" role="tabpanel" aria-labelledby="list-{{app['appname']}}-list">Настройки приложения <b>&laquo;{{app['name']}}&raquo;</b><hr>
+	<form method=post action="{{url({app:'admin',alias:'admin_apps'})}}">
+	<div class="input-group">
+  	<select class="custom-select" name='state' id="inputGroupSelect04">
+  		{% if app.system==1 %}
+  		{% if app.state==1 %}
+    	<option value="{{app.state}}" selected>Включить</option>
+		<option value="0">Выключить</option>
+    	{% else %}
+    	<option value="{{app.state}}" selected>Выключить</option>
+    	<option value="1">Включить</option>
+    	{% endif %}
+    	{% else %}
+    	{% if app.state==1 %}
+    	<option value="{{app.state}}" selected>Включить</option>
+		<option value="0">Выключить</option>
+		<option value="2">Удалить</option>
+    	{% else %}
+    	<option value="{{app.state}}" selected>Выключить</option>
+    	<option value="1">Включить</option>
+    	<option value="2">Удалить</option>
+    	{% endif %}
+    	{% endif %}
+  	</select>
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" name='app' value="{{ app.appname }}" type="submit">Сохранить</button>
+  </div>
+</div>
+  </form>
+	</div>
+	{% endfor %}
+
+      
+    </div>
+  </div>
+</div>
+</div>
+ {% endblock %}
+
+
+ 
+    

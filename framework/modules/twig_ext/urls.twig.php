@@ -40,12 +40,12 @@ class Urls_Twig_Extenstion extends \Twig_Extension
 		foreach ($iterable_urls as $iu) {
 			
 			if($alias_name == $iu['alias']){
-				$c++;
+				//$c++;
 				return $this->convert_url($iu['pattern']);
 			}
 		}
 		if ($c==0) {
-				return '/bad_link';
+				return '/development';
 			}
 
 

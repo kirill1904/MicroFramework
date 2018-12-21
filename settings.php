@@ -18,7 +18,21 @@
 	$macro[$key]['name'] = str_replace('.macro.html','', $macro[$key]['path'] );
 	}
 
-	
+	$apps = db_find('apps','`state`',array(1),2);
+	$active_apps=array();
+	foreach ($apps as $app) {
+		$active_apps[] = $app['appname'];
+	}
+
+	return array(
+		'site' => 'Framework',
+		'styles' => $style,
+		'scripts' => $script,
+		'macro' => $macro,
+		'apps' => $active_apps
+	);
+
+/*
 	return array(
 		'site' => 'Framework',
 		'styles' => $style,
@@ -27,9 +41,9 @@
 		'apps' => array(
 			'simple_pages',
 			'blog',
-			'bad_link',
+			'development',
 			'auth',
 			'admin'
 		)
-	);
+	);*/
 ?>
