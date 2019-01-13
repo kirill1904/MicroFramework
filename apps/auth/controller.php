@@ -19,6 +19,7 @@ class Auth_Controller extends Controller
 		if(isset($message)){
 			$vars['message'] = $message;
 		}
+		$vars['account'] = 'active';
 		render('main', $vars);
 	}
 
@@ -27,11 +28,14 @@ class Auth_Controller extends Controller
 		if(isset($_POST['log'])){
 			$login = $_POST['login'];
 			$pass = $_POST['pass'];
+			$referer = $_POST['ref'];
 			$user = db_find('users', 'login', array($login) , 1);
 			if(isset($user['login'])){
 				if(password_verify($pass,$user['password'])){
 					$_SESSION['login'] = $login;
-					redirect('/');
+					if (isset($referer)){redirect($referer);}
+					else redirect('/');
+					
 				}
 				else {
 					$message = array('text'=>'Пароль неверный!','type'=>'alert-danger');
@@ -49,7 +53,7 @@ class Auth_Controller extends Controller
 
 	public function logout($args){
 		unset($_SESSION['login']);
-		redirect('/');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function register($args){
@@ -82,7 +86,7 @@ class Auth_Controller extends Controller
 		render('register', $vars);
 	}
 	public function edit($args){
-		
+		render('edit',$vars);
 	}
 }
 

@@ -2,6 +2,7 @@
 	
 	return array(
 		url('/blog', 'main', 'alias_blog'),
+		url('/blog/category/{id}', 'category', 'alias_blogcat'),
 		url('/blog/{id}-{title}', 'read', 'blog_page')
 	);
 

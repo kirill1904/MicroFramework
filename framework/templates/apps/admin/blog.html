@@ -1,0 +1,119 @@
+{% extends 'main.html' %}
+
+ {% block adminpanel %}
+	 <h1 class="h2">Управление блогом</h1> 
+   <a class="btn btn-outline-primary" href='{{url( {alias:"admin_blogadd"} )}}'>Добавить запись</a>
+   <a class="btn btn-outline-success" data-toggle="modal" data-target="#AddCat" href="#">Добавить категорию</a>
+   <hr>
+    
+	 <table class="table table-sm table-hover" id="grid">
+  <thead>
+    <tr class=table-primary>
+      <th scope="col" data-type="number" id="sort">#</th>
+      <th scope="col" data-type="string">Название</th>
+      <th scope="col">Описание</th>
+      <th scope="col">Категория</th>
+      <th scope="col" data-type="number" id="sort">Просмотры</th>
+      <th scope="col">Редактировать</th>
+      <th scope="col">Удалить</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for art in news %}
+    <tr>
+      <th scope="row">{{art.id}}</th>
+      <td>{{art.title}}</td>
+      <td>{{art.desc}}</td>
+      <td>{{art.cat_name}}</td>
+      <td>{{art.views}}</td>
+      <td><a href='{{url( {alias:"admin_blogedit",id:art.id} )}}' class="btn btn-outline-primary">Редактировать</a></td>
+      <td><a href='{{url( {alias:"admin_blogdelete",id:art.id} )}}' class="btn btn-outline-danger">Удалить</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if page_count!=1 %}
+{% include 'paginator.html' %}
+{% endif %}
+
+<div class="modal fade" id="AddCat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавление категории</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action='{{url( {alias:"admin_catadd"} )}}' method="post">
+      <div class="modal-body">
+        <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">Название категории</span>
+  </div>
+  <input type="text" class="form-control" name=name placeholder="Название категории" required aria-label="Название категории" aria-describedby="basic-addon1">
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрыть</button>
+        <button type="submit" name=catadd href="{{url({app:'simple_pages',alias:'alias_index'})}}" class="btn btn-outline-success">Добавить</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+    // сортировка таблицы
+    // использовать делегирование!
+    // должно быть масштабируемо:
+    // код работает без изменений при добавлении новых столбцов и строк
+
+    var grid = document.getElementById('grid');
+
+    grid.onclick = function(e) {
+      if (e.target.tagName != 'TH') return;
+
+      // Если TH -- сортируем
+      sortGrid(e.target.cellIndex, e.target.getAttribute('data-type'));
+    };
+
+    function sortGrid(colNum, type) {
+      var tbody = grid.getElementsByTagName('tbody')[0];
+
+      // Составить массив из TR
+      var rowsArray = [].slice.call(tbody.rows);
+
+      // определить функцию сравнения, в зависимости от типа
+      var compare;
+
+      switch (type) {
+        case 'number':
+          compare = function(rowA, rowB) {
+            return rowA.cells[colNum].innerHTML + rowB.cells[colNum].innerHTML;
+          };
+          break;
+        case 'string':
+          compare = function(rowA, rowB) {
+            return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML;
+          };
+          break;
+      }
+
+      // сортировать
+      rowsArray.sort(compare);
+
+      // Убрать tbody из большого DOM документа для лучшей производительности
+      grid.removeChild(tbody);
+
+      // добавить результат в нужном порядке в TBODY
+      // они автоматически будут убраны со старых мест и вставлены в правильном порядке
+      for (var i = 0; i < rowsArray.length; i++) {
+        tbody.appendChild(rowsArray[i]);
+      }
+
+      grid.appendChild(tbody);
+
+    }
+  </script>
+
+ {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %} {{title| raw }} {% endblock %}
+
+
+
+
+
+{% block content %}
+<h1>{{title | raw}}</h1>
+
+{% if view=='cat'  %}
+<a href="{{url({app:'blog',alias:'alias_blog'})}}" role="button" class="btn btn-outline-primary">&laquo; К списку новостей</a> 
+{% endif %}
+ <hr>  
+<div class="row">
+{% for art in news %}
+
+<div class="col-sm-3">
+<div class="card" style="width: 17rem;">
+	<img class="card-img-top" src="{% if art.image!='' %}/load/images/{{art.image}}{% else %}/framework/assets/images/no-photo.jpg{% endif %}" alt="Card image cap">
+	<div class="card-body">
+	    <h5 class="card-title">{{art.title}}</h5>
+	    <p class="card-category"><a href="{{url({app:'news',alias:'alias_blogcat',id:art.category_id})}}">{{ art.cat }}</a></p>
+	    <p class="card-text">{{ art.desc }}</p>
+	    <div>
+	    	<a class="btn btn-outline-primary disabled"><span data-feather="eye" style="width: 15px;" ></span> {{art.views}}</a>
+	    	<a class="btn btn-outline-primary disabled"><span data-feather="heart" style="width: 15px; color: red;" ></span> {{art.likes}}</a>
+	    	<a href="{{url({app:'news',alias:'blog_page',id:art.id,title:art.name})}}" class="btn btn-primary">Читать</a> 
+	    </div>
+	</div>
+</div>
+</div>
+{% endfor %}
+
+</div>
+{% if page_count!=1 %}
+{% include 'paginator.html' %}
+{% endif %}
+{% endblock %}

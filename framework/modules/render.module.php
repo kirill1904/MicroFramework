@@ -2,8 +2,10 @@
 
 function render($view,$vars = array()){
 
-	$loader = new Twig_Loader_Filesystem(TEMPLATES_DIR);
+	$loader = new Twig_Loader_Filesystem(THEME_DIR);
+	if (defined ( "ACTIVE_APP" )){
 	$loader->addPath(TEMPLATES_DIR . '/apps/' . ACTIVE_APP);
+	}
 	$loader->addPath(TEMPLATES_DIR . '/macro/');
 	$loader->addPath(TEMPLATES_DIR . '/components/');
 
@@ -33,12 +35,17 @@ function render_url($view, $vars = array()){
 }
 
 function extend_vars(&$vars){
-	
+	$links=db_find('navmenu');
+	$categories=db_find('categories');
 	$app = ACTIVE_APP;
 	$vars['page']=active_page();
 	$vars['active_app'] = $app;
+	$vars['active_alias'] = ACTIVE_ALIAS;
 	$vars['settings'] = require(BASE_DIR . '/settings.php');
 	$vars['post'] = $_POST;
+	$vars['links']=$links;
+	$vars['categories'] = $categories;
+	$vars['referer'] = $_SERVER['HTTP_REFERER'];
 	if(isset($_SESSION['login'])){
 		$vars['user'] = db_find('users','login',array(($_SESSION['login'])),1); 
 		$vars['user']['type'] = (int)$vars['user']['type'];
@@ -49,5 +56,6 @@ function extend_vars(&$vars){
 			$vars['appvars'][$iterable_app] = require $twig_app_extend;
 		}
 	}
+	
 }
 ?>

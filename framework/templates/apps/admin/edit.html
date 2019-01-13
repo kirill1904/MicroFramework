@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+
+ {% block adminpanel %}
+ <h1 class="h2">Редкатирование записи</h1> <a class="btn btn-outline-primary" href='{{url( {alias:"admin_blog"} )}}'>Ко всем записям</a><hr>
+<form enctype="multipart/form-data" action="{{url( {alias:'admin_blogedit',id:article.id} )}}" method="post">
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">Название</span>
+  </div>
+  <input type="text" class="form-control" value="{{article.title}}" name=title placeholder="Название" required aria-label="Название" aria-describedby="basic-addon1">
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">Изображение</span>
+  </div>
+  <input type="file" class="form-control" name=image placeholder="Изображение" accept="image/jpeg,image/png,image/bmp,image/gif" aria-label="Изображение" aria-describedby="basic-addon1">
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect01">Категория</label>
+  </div>
+  <select required class="custom-select" name=cat id="inputGroupSelect01">
+   <!-- <option selected>Выберите</option> -->
+    {% for cat in categories %}
+    {% if cat.id == article.category_id %}
+		<option value="{{cat.id}}" selected>{{cat.name}}</option>
+    {% else %}
+    <option value="{{cat.id}}">{{cat.name}}</option>
+    {% endif %}
+	{% endfor %}
+  </select>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text"  id="basic-addon1">Описание</span>
+  </div>
+  <input type="text" class="form-control" name=desc value="{{article.desc}}"  pattern=".{5,50}" placeholder="Описание" required aria-label="Описание" aria-describedby="basic-addon1">
+</div>
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Текст записи</span>
+  </div>
+  <textarea required class="form-control" name="text" aria-label="Текст записи">{{article.text}}</textarea>
+</div>
+<br>
+<div class="input-group">
+  <input type="submit" name="edit" value="Изменить" class="btn btn-primary">
+</div>
+
+</form>
+{% endblock %}

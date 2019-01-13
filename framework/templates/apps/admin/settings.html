@@ -1,0 +1,199 @@
+{% extends 'main.html' %}
+
+ {% block adminpanel %}
+
+
+ <h1 class="h2">Настройки сайта</h1><hr>
+
+<div class="list-group" >
+<div class="row" >
+<div class="col-3">
+<div class="list-group" id="list-tab" role="tablist">
+	<a class="list-group-item list-group-item-action" id="list-general-list" data-toggle="list" href="#list-general" role="tab" aria-controls="general">Основное </a>
+  	<a class="list-group-item list-group-item-action" id="list-navmenu-list" data-toggle="list" href="#list-navmenu" role="tab" aria-controls="navmenu">Навигационное меню </a>
+
+  
+</div>
+  </div>
+  <div class="col-6" >
+   <div class="tab-content" id="nav-tabContent">
+   <div class="tab-pane fade show" id="list-general" role="tabpanel" aria-labelledby="list-general-list">Основные настройки</b><hr>
+<form method=post action="{{ url({alias:'admin_settings'}) }}">
+<div class="input-group mb-3">
+  <div class="input-group-prepend"> 	
+    <span class="input-group-text" id="basic-addon1">Заголовок сайта</span>   
+  </div>
+  <input type="text" class="form-control" name="title"  placeholder="Заголовок" value="{{settings.sitename}}" aria-label="Заголовок" aria-describedby="basic-addon1">
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">Записей на страницу:</span>
+  </div>
+  <input type="text" class="form-control" name="perpage"  placeholder="Записей на страницу" value="{{settings.per_page}}" aria-label="Записей на страницу" aria-describedby="basic-addon1">
+</div>
+<button type="submit" class="btn btn-primary" name=app value="general">Соханить</button>
+   </form>
+   </div>
+  
+
+
+  
+	<div class="tab-pane fade show" id="list-navmenu" role="tabpanel" aria-labelledby="list-navmenu-list">Настройки навигационного меню</b><hr>
+	<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Название</th>
+      <th scope="col">Ссылка</th>
+      <th scope="col">Приложение</th>
+      <th scope="col">Изменить</th>
+      <th scope="col">Удалить</th>
+
+    </tr>
+  </thead>
+  <tbody >
+    {% for link in links %}
+    <tr>
+      <th scope="row">{{link.id}}</th>
+      <td>{{link.title}}</td>
+      <td>{{link.alias}}</td>
+      <td>{{link.app}}</td>
+      <td><td><a href='{{url( {alias:"admin_linkedit",id:link.id} )}}' class="btn btn-outline-primary">Изменить</a></td>   </td>     
+      <td><a href='{{url( {alias:"admin_linkdelete",id:link.id} )}}' class="btn btn-outline-danger">Удалить</a></td>     
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLink">
+  Добавить ссылку
+  </button>
+  
+<!-- Modal -->
+<div class="modal fade" id="addLink" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить ссылку</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{{url({app:'admin',alias:'admin_settings'})}}">
+        <input type="hidden"  name=app value=addlink >
+         <div class="input-group mb-3" >
+          <div class="input-group-prepend">   
+            <label class="input-group-text" for="app2">Приложение</label>
+          </div>
+          <select class="custom-select" onchange="getLinks(this.options[this.selectedIndex].value)" name='addapp' id="app2">
+        <option value="#" selected>Выберите приложение</option>
+        {% for app in apps %}
+        {% if app.appname!='admin' %}
+        <option value="{{app.appname}}" >{{app.name}}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+        </div>
+        
+        <div class="input-group mb-3"  >
+          <div class="input-group-prepend alias" style='display: none'>   
+            <label class="input-group-text" for="alias">Ссылка</label>
+          </div>
+          <select class="custom-select alias" style='display: none' onchange='selected(this);' name=alias id=alias >
+        <option value="#" selected>Выберите ссылку</option>
+          </select>
+        </div>
+
+        <div class="input-group mb-3"  >
+          <div class="input-group-prepend category" style='display: none'>   
+            <label class="input-group-text" for="category">Категория</label>
+          </div>
+          <select class="custom-select category" style='display: none' onchange='$(".title").css("display","inline-block");' name=category id=category >
+        <option value="#" selected>Выберите ссылку</option>
+          </select>
+        </div>
+    	
+      <div class="input-group mb-3" >
+          <div class="input-group-prepend title" style='display: none'>   
+            <span class="input-group-text" id="basic-addon1">Текст ссылки</span>   
+          </div>
+          <input id=title  type="text" class="form-control title" style='display: none' name="title"  placeholder="Текст ссылки"  aria-label="Текст ссылки" aria-describedby="basic-addon1">
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <button type="submit" class="btn btn-primary" >Добавить ссылку</button>
+      </div>
+    </form>
+    </div>
+</div> 
+</div>  
+<!-- Пусть это полежит тут
+	<form method=post action="{{url({app:'admin',alias:'admin_settings'})}}">
+	<input type="checkbox" name='search' {% if settings.search == 1 %}checked{% endif %}> Включить поиск <br>
+  	
+ 
+    <button class="btn btn-outline-secondary" name='app' value="navmenu" type="submit">Сохранить</button>
+ 
+  </form>
+-->
+	</div>
+
+
+      
+
+  </div>
+</div>
+</div>
+
+ <script>
+//
+function getLinks(app) {
+	$("#alias").html('<option value="#" selected>Выберите ссылку</option>');	
+  $(".category").css('display','none');  
+  $(".title").css('display','none');
+	$(".alias").css('display','inline-block');
+$.getJSON( "/framework/ajax/alias.php", {
+    app:app,
+    tagmode: "any",
+    format: "json"
+  })
+    .done(function( data ) {
+
+      aliases = data.aliases;
+      arr = aliases.split(",");
+      arr.forEach(function(element) {
+      if(element!=''){
+      ar = element.split("@");
+        
+      $("#alias").append("<option value='"+ar[0]+"'> "+ar[1]+" </option>");
+      }else{
+      $("#alias").html("<option selected'> Нет доступных ссылок </option>");
+      }
+  
+});
+      
+    });
+	
+}
+function selected(alias){
+    $(".title").css("display","inline-block");
+    if (alias.value=='alias_blogcat') {$( ".category").css('display','inline-block');}
+    else {$( ".category").css('display','none');}
+    $.getJSON( "/framework/ajax/cat.php", {
+    tagmode: "any",
+    format: "json"
+  })
+    .done(function( data ) {
+      categories = data;
+      var count = Object.keys(categories).length;
+      console.log(count);
+      var i;
+      for (i = 0; i < count; i++) {
+        $("#category").append("<option value='"+categories[i].id+"'> "+categories[i].name+" </option>");
+      }
+});
+}
+
+</script>
+ {% endblock %}

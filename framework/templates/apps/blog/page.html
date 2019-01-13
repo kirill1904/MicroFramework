@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %} {{title| raw }}} {% endblock %}
+{% block bannerh1 %} Просмотр записи {% endblock %}
+{% block aditional %}
+<a href="{{url({app:'blog',alias:'alias_blog'})}}" role="button" class="btn btn-outline-primary">&laquo; К списку новостей</a>      
+{% endblock %}
+{% block pagename %}
+{{article.title}}
+{% endblock %}
+
+
+{% block content %}
+<h2>{{article.title}}</h2>  <a class="btn btn-outline-primary" href="{{url({alias:'alias_blog'})}}">&laquo; К списку новостей</a>
+<a class="btn btn-outline-primary disabled"><span data-feather="eye"></span> {{article.views}}</a>
+<a class="btn btn-outline-primary" onclick="like()"><span data-feather="thumbs-up" style="color: red;"></span> <b id="like">{{article.likes}}</b></a> 
+<hr>
+{% if article.image!='' %}
+<img class="article-image" style="max-width: 700px;max-height: 600px;" src="/load/images/{{article.image}}" alt="{{article.title}}"><br>
+{% endif %}
+{{article.text|nl2br}}
+
+
+<script>
+	function like() {
+		$.ajax({
+  			url: '/framework/ajax/like.php',
+  			data: {like:{{article.id}}},
+  			success: function(res){
+    		$("#like").html(res);
+    		//location.reload();
+  		}
+});
+	}
+</script>
+{% endblock %}

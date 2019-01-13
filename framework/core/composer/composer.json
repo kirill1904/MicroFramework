@@ -2,6 +2,7 @@
     "require": {
         "gabordemooij/redbean": "^5.2",
         "twig/twig": "^2.6",
-        "twig/extensions": "^1.5"
+        "twig/extensions": "^1.5",
+        "ospinto/dbug":"dev-master"
     }
 }

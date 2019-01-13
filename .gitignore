@@ -1,2 +1,3 @@
 .htaccess
 /load/images/*
+.DS_Store

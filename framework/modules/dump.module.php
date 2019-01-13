@@ -1,8 +1,6 @@
 <?php 
 function dump($what, $exit = true){
-	echo "<pre>";
-	var_dump($what);
-	echo "</pre>";
+	new dBug($what);
 
 	if ( $exit ){
 		exit;

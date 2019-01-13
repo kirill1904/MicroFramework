@@ -1,6 +1,6 @@
 <?php 
 
-class Engine 
+class Engine
 {
 	public 
 		$settings,
@@ -36,13 +36,18 @@ class Engine
 		}
 
 		if($this->app==false){
-			exit("App not found");
+			define('ACTIVE_APP', 'development');
+			define('ACTIVE_ALIAS', '404');
+			render('404');
+			//exit("App not found");
 
 		}
 	}
 
 	public function process_defines(){
 		define('ACTIVE_APP', $this->app['0']);
+		define('ACTIVE_ALIAS', $this->app['1']['alias']);
+		
 	}
 
 	public function process_controllers(){

@@ -1,0 +1,1 @@
+<?php return array('name'=>'test','login'=>'root','pass'=>''); ?>

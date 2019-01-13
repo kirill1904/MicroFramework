@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+ {% block adminpanel %}
+ <h1 class="h2">Редкатирование ссылки</h1> <a class="btn btn-outline-primary" href='{{url( {alias:"admin_settings"} )}}'>Назад</a><hr>
+<form  action="{{url( {alias:'admin_linkedit',id:link.id} )}}" method="post">
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">Название</span>
+  </div>
+  <input type="text" class="form-control" value="{{link.title}}" name=title placeholder="Название" required aria-label="Название" aria-describedby="basic-addon1">
+</div>
+<div class="input-group">
+  <input type="submit" name="edit" value="Изменить" class="btn btn-primary">
+</div>
+
+</form>
+{% endblock %}
